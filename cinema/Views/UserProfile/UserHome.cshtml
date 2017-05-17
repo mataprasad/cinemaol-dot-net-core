@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using WebApplication.Services;
+@using WebApplication.Models;
+@model UserInfo
+@{
+    ViewBag.Title = "UserHome";
+}
+@section head{
+    <style type="text/css">
+        .style1 {
+            width: 135px;
+        }
+
+        .style2 {
+            width: 122px;
+        }
+    </style>
+}
+<div style="padding: 0px; margin: 0px; width: 100%; height: 400px;">
+    <div style="border-style: none none solid none; border-width: 0px 0px 1px 0px; padding: 0px; margin: 0px; width: 200px; height: 40px; float: left; border-bottom-color: #CCCCCC;"></div>
+    <div style="padding: 0px; margin: 0px; width: 580px; height: 40px; float: left">
+        <div style="float: left; height: 40px; width: 580px;">
+            <a href="@Url.Action("UserHome", "UserProfile")"
+                style="float: left; border-style: solid none none solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 90px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">MyAccount</a>
+            <a href="@Url.Action("EditProfile", "UserProfile")"
+                style="float: left; border-style: solid none solid solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 90px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">EditProfile</a>
+            <a href="@Url.Action("ChangePassword", "UserProfile")"
+                style="float: left; border-style: solid none solid solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 135px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">ChangePassword</a>
+            <a href="@Url.Action("BookingHistory", "UserProfile")"
+                style="float: left; border-style: solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 135px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">BookingHistroy</a>
+            <a
+                style="float: left; border-style: none none solid none; border-width: 1px; border-color: #CCCCCC; display: block; width: 125px; line-height: 39px; height: 40px; vertical-align: middle; text-align: center;"></a>
+        </div>
+
+        <div style="padding: 5px; margin: 40px auto 0px auto; border-style: none solid solid solid; border-width: 1px; border-color: #CCCCCC; width: 580px; height: 350px;">
+            <div style="margin: 0px auto 0px auto; width: 360px;">
+                <br />
+                <br />
+                <table style="width: 357px">
+                    <tr>
+                        <td class="style2">First Name </td>
+                        <td>
+                            @Model.User_FName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Last Name </td>
+                        <td>
+                            @Model.User_LName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">User Name </td>
+                        <td>
+                            @Model.User_LoginName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Email </td>
+                        <td>
+                            @Model.User_Email
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Mobile No. </td>
+                        <td>
+                            @Model.User_MobileNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Address </td>
+                        <td>
+                            @Model.User_Add
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">City </td>
+                        <td>
+                            @Model.User_City
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">State </td>
+                        <td>
+                            @Model.User_State
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Security Question </td>
+                        <td>
+                            @Model.User_SQ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="style2">Security Answer </td>
+                        <td>
+                            @Model.User_SA
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div style="border-style: none none solid none; border-color: #CCCCCC; padding: 0px; margin: 0px; width: 200px; height: 40px; float: left; border-bottom-width: 1px;"></div>
+</div>

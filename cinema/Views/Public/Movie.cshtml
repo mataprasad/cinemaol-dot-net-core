@@ -1,0 +1,53 @@
+@using WebApplication.Models;
+@model List<MovieInfo>
+@{
+    ViewBag.Title = "Movie";
+}
+
+@section head{
+    <link href="@Url.Content("~/resources/jquery-ui.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.js")"></script>
+    <script>
+        function fn_OnRdbUpcommingClick() {
+            window.location.href = "@Url.Action("MovieUpComming","Public")";
+        }
+        $(document).ready(function () {
+            $(function () {
+                $("#accordion").accordion({
+                    collapsible: true
+                });
+                $("#radio").buttonset();
+            });
+        });
+    </script>
+    <style type="text/css">
+        .style2 {
+            width: 100%;
+        }
+    </style>
+    <style type="text/css">
+        .style1 {
+            width: 100%;
+            border-bottom-color: Black;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-collapse: collapse;
+        }
+
+        .style2 {
+            width: 180px;
+        }
+    </style>
+}
+<div style="height: 35px; padding: 0px; margin: 0px; width: 100%; margin-bottom: 15px; display: block; line-height: 35px; vertical-align: middle; text-align: left; color: #FFFFFF; font-size: 15pt; font-weight: bold">
+    <div id="radio">
+        <input type="radio" id="radio1" name="radio" checked="checked" /><label for="radio1">RUNNING MOVIES</label>
+        <input type="radio" id="radio2" name="radio" onclick="fn_OnRdbUpcommingClick();" /><label for="radio2">UPCOMMING MOVIES</label>
+    </div>
+</div>
+<div id="accordion">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        @Html.Partial("_MovieDetail", Model[i])
+    }
+</div>

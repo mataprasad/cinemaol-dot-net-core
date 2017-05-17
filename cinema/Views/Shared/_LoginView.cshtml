@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Http;
+@using WebApplication.Services;
+@using WebApplication.Models;
+@using System.Security.Claims;
+<div style="width: 500px; height: 100px; float: right;">
+    <div id="LoginRegister" runat="server" class="menu_" style="height: 50%; display: block; vertical-align: top; text-align: right; line-height: 100%;">
+        @{
+            if (Context.Session.GetItem("UserInfo") != null)
+            {
+                UserInfo dt = Context.Session.GetItem<UserInfo>("UserInfo");
+                string name = dt.User_FName + " " + dt.User_LName;
+                if (name.Length > 20)
+                {
+                    name = name.Substring(0, 20).ToUpper();
+                }
+            <a href="@Url.Action("LogOut", "Public")">Log Out</a> <a class="xx" style=" width:300px;background-color: #ffffff; " href="@Url.Action("UserHome", "UserProfile")" title="Click to go your Account Home !">Welcome  @name</a>
+            }
+            else
+            {
+            <a href="@Url.Action("Login", "Public")">Login</a> <a href="@Url.Action("Register", "Public")">Register</a>
+            }
+        }
+
+    </div>
+    <div class="menu_" style="height: 50%; display: block; vertical-align: top; text-align: right; line-height: 100%;">
+        @{if (Context.Session.GetItem("IsAdmin") == null)
+          {
+            <a href="@Url.Action("Contact", "Public")" >ContactUs</a><a href="@Url.Action("About", "Public")">AboutUs</a><a
+                            href="@Url.Action("Movie", "Public")">Movies</a><a
+                                href="@Url.Action("Index", "Public")">Home</a>
+          }
+          else
+          {
+            <a href="@Url.Action("AddMovie","Admin")" style="width: 150px;">AddMovies</a>
+            <a href="@Url.Action("RemoveMovie","Admin")" style="width: 150px;">RemoveMovies</a>
+            <a href="@Url.Action("ManageShow","Admin")" style="width: 150px;">ManageShows</a>
+          }
+        }
+        <br />
+        <br />
+        <center>
+                        Your IP is: @Context.Connection.RemoteIpAddress
+                    </center>
+    </div>
+</div>

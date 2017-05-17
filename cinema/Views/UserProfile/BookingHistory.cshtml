@@ -1,0 +1,101 @@
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using WebApplication.Services;
+@using WebApplication.Models;
+@model List<BookingHistory>
+@{
+    ViewBag.Title = "BookingHistory";
+}
+
+@section head{
+    <link href="@Url.Content("~/css/simplePagination.css")" rel="stylesheet" />
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+    <script src="~/Scripts/jquery.simplePagination.js"></script>
+    <script type="text/javascript">
+        function mypopup(url, width1, height1) {
+            width = window.screen.width;
+            height = window.screen.height;
+            mywindow = window.open(url, "CinemaOL", "location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width=" + width + ",height=" + height);
+            mywindow.moveTo(0, 0);
+            mywindow.focus();
+        }
+    </script>
+}
+
+<div style="padding: 0px; margin: 0px; width: 100%; height: 450px;">
+    <div style="border-style: none none solid none; border-width: 0px 0px 1px 0px; padding: 0px; margin: 0px; width: 200px; height: 40px; float: left; border-bottom-color: #CCCCCC;"></div>
+    <div style="padding: 0px; margin: 0px; width: 580px; height: 40px; float: left">
+        <div style="float: left; height: 40px; width: 580px;">
+            <a href="@Url.Action("UserHome", "UserProfile")" 
+                style="float: left; border-style: solid none solid solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 90px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">MyAccount</a>
+            <a href="@Url.Action("EditProfile", "UserProfile")" 
+                style="float: left; border-style: solid none solid solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 90px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">EditProfile</a>
+            <a href="@Url.Action("ChangePassword", "UserProfile")"
+                style="float: left; border-style: solid none solid solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 135px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">ChangePassword</a>
+            <a href="@Url.Action("BookingHistory", "UserProfile")"
+                style="float: left; border-style: solid solid none solid; border-width: 1px; border-color: #CCCCCC; display: block; width: 135px; line-height: 40px; height: 39px; vertical-align: middle; text-align: center;">BookingHistroy</a>
+            <a
+                style="float: left; border-style: none none solid none; border-width: 1px; border-color: #CCCCCC; display: block; width: 125px; line-height: 39px; height: 40px; vertical-align: middle; text-align: center;"></a>
+        </div>
+
+        <div id="divWrapper" style="border-left: 1px solid #CCCCCC; border-right: 1px solid #CCCCCC; border-top: 1px none #CCCCCC; border-bottom: 1px solid #CCCCCC; padding: 5px; margin: 40px 0px 0px 0px; width: 580px; height: 375px;"
+            align="center">
+            <br />
+            <div id="resultDiv">
+                <table cellspacing="0" cellpadding="3" rules="all" border="1" style="width: 100%; background-color: White; border-color: #000000; border-width: 1px; border-style: solid; font-size: Small; border-collapse: collapse;">
+                    <tr style="color: White; background-color: #006699; font-weight: bold;">
+                        <th scope="col">Booking Date</th>
+                        <th scope="col">Show Date</th>
+                        <th scope="col">Show Time</th>
+                        <th scope="col">Movie Name</th>
+                        <th scope="col">OL Ticket Number</th>
+                        <th scope="col">View Detail</th>
+
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="color: #000066;">
+                            <td>@item.Booking_Date</td>
+                            <td>@item.Show_Date</td>
+                            <td>@item.Show_Time</td>
+                            <td style="width: 150px;">@item.Movie_Name</td>
+                            <td style="width: 50px;">@item.Ticket_No</td>
+                            <td>
+                                <a href='javascript:mypopup("@Url.Action("BookingDetail", "UserProfile", new { id = @item.Ticket_Id })","400","450");' style="color: #0000CC; text-decoration: underline;">View</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="pagination-holder clearfix" style="margin-top: 5px;">
+                <div id="historyPager"></div>
+            </div>
+        </div>
+
+    </div>
+    <div style="border-style: none none solid none; border-color: #CCCCCC; padding: 0px; margin: 0px; width: 200px; height: 40px; float: left; border-bottom-width: 1px;"></div>
+</div>
+<script>
+    $('#historyPager').pagination({
+        items: @ViewBag.RecordsCount,
+        itemsOnPage: 10,
+        cssStyle: 'compact-theme',
+        displayedPages: 7,
+        selectOnClick: true,
+        onPageClick: function (pageNo, event) {
+            // window.location.href="@Url.Action("BookingHistory", "UserProfile")?page="+pageNo;// synchronus
+            // asynchronus call
+            $("#divWrapper").block();
+            $.ajax({
+                url:"@Url.Action("BookingHistoryAjax", "UserProfile")?forAjax=1&page="+pageNo,
+                type:"GET",
+                success:function(response){
+                    $("#resultDiv").html(response);
+                    $("#divWrapper").unblock();},
+                error:function(a,b,c){ alert("Error in AJAX call.");}
+            });
+        }
+    });
+    //$('#historyPager').pagination('drawPage',  @ViewBag.PageNo);// synchronus
+    
+</script>

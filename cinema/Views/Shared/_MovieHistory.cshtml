@@ -1,0 +1,29 @@
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using WebApplication.Services;
+@using WebApplication.Models;
+@model List<BookingHistory>
+<table cellspacing="0" cellpadding="3" rules="all" border="1" style="width: 100%; background-color: White; border-color: #000000; border-width: 1px; border-style: solid; font-size: Small; border-collapse: collapse;">
+    <tr style="color: White; background-color: #006699; font-weight: bold;">
+        <th scope="col">Booking Date</th>
+        <th scope="col">Show Date</th>
+        <th scope="col">Show Time</th>
+        <th scope="col">Movie Name</th>
+        <th scope="col">OL Ticket Number</th>
+        <th scope="col">View Detail</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr style="color: #000066;">
+            <td>@item.Booking_Date</td>
+            <td>@item.Show_Date</td>
+            <td>@item.Show_Time</td>
+            <td style="width: 150px;">@item.Movie_Name</td>
+            <td style="width: 50px;">@item.Ticket_No</td>
+            <td>
+                <a href='javascript:mypopup("@Url.Action("BookingDetail", "UserProfile", new { id = @item.Ticket_Id })","400","450");' style="color: #0000CC; text-decoration: underline;">View</a>
+            </td>
+        </tr>
+    }
+</table>

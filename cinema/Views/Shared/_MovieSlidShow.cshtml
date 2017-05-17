@@ -1,0 +1,5 @@
+@model List<String>
+@foreach (String item in Model)
+{
+    <li><a href="@Url.Content("~/" + item)" title=""></a></li>
+}

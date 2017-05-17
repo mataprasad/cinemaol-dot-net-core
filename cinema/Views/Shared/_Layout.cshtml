@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CinemaOL | An Online Cinema Ticket Booking System</title>
+    <script type="text/javascript">
+        window.history.forward(1);
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/resources/jquery-1.6.1.min.js")"></script>
+    <script type="text/javascript">
+        var rev = "fwd";
+        function titlebar(val) {
+            var msg = "CinemaOL | An Online Cinema Ticket Booking System";
+            var res = " ";
+            var speed = 100;
+            var pos = val;
+
+            msg = "" + msg + "";
+            var le = msg.length;
+            if (rev == "fwd") {
+                if (pos < le) {
+                    pos = pos + 1;
+                    scroll = msg.substr(0, pos);
+                    document.title = scroll;
+                    timer = window.setTimeout("titlebar(" + pos + ")", speed);
+                }
+                else {
+                    rev = "bwd";
+                    timer = window.setTimeout("titlebar(" + pos + ")", speed);
+                }
+            }
+            else {
+                if (pos > 0) {
+                    pos = pos - 1;
+                    var ale = le - pos;
+                    scrol = msg.substr(ale, le);
+                    document.title = scrol;
+                    timer = window.setTimeout("titlebar(" + pos + ")", speed);
+                }
+                else {
+                    rev = "fwd";
+                    timer = window.setTimeout("titlebar(" + pos + ")", speed);
+                }
+            }
+        }
+
+        titlebar(0);
+    </script>
+    @RenderSection("head", false)
+    <link href="@Url.Content("~/resources/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/favicon.ico")" rel="Shortcut Icon" />
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div style="width: 300px; height: 100px; float: left;">
+                <a href="@Url.Action("Index", "Public")">
+                    <img src="@Url.Content("~/images/appImages/logo.png")"  height="100px" width="300px" alt="CinemaOL" id="logo" />
+                </a>
+            </div>
+            
+            @Html.Partial("_LoginView")
+
+        </div>
+    </div>
+    <div id="content">
+        @RenderBody()
+    </div>
+
+    <div id="footer">
+        <div style="height: 20px;">
+            <div style="width: 600px; float: left">
+                <ul style="padding: 0px; margin: 0px; list-style-type: none; height: 20px; width: 600px;">
+                    <li style="float: left;">Designed and Developed by Mata Prasad Chauhan.
+        All Rights Reserved &copy; 2012
+                    </li>
+                </ul>
+            </div>
+            <div style="width: 100px; height: 20px; float: right;">
+
+
+                <ul style="padding: 0px; width: 100px; height: 20px; float: right; margin: 0px; list-style-type: none;">
+                    <li style="float: right; height: 20px; width: 100px; margin: 0px; padding: 0px;">
+                        <a href="@Url.Action("LoginAdmin", "Public")"
+                                style="width: 100px; height: 20px; display: block; line-height: 20px; vertical-align: middle; text-align: center; color: #808000; text-decoration: underline; font-weight: bold; font-size: 12pt;">Admin Login  </a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

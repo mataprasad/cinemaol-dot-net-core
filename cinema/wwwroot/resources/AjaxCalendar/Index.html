@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Ajax Calendar</title>
+    <link href="AjaxCalendar.css" rel="stylesheet" type="text/css" />
+    <script src="AjaxCalendar.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        Sys.Application.add_init(appInit);
+        function appInit() {
+            $create(AjaxControlToolkit.CalendarBehavior, { "button": $get("Button1"), "format": "dd/MM/yyyy" }, null, null, $get('birthDate'));
+        }
+    </script>
+</head>
+<body>
+    <label for="birthDate">
+        Birth Date:</label>
+    <input id="birthDate" disabled name="birthDate" readonly="readonly" />
+    <img src="Calendar.gif" id="Button1" style="cursor: pointer;" alt="" />
+</body>
+</html>

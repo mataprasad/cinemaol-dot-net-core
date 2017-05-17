@@ -1,0 +1,95 @@
+@{ 
+}
+<form action="@Url.Action("MakeShowSelection", "Public")" method="post" onsubmit="return fn_ValidateForm();">
+    <div align="center" style="width: 250px">
+        <br />
+        <table class="style1">
+            <tr>
+                <td align="left">Select a Movie --</td>
+            </tr>
+            <tr>
+                <td align="left">
+                    @Html.DropDownList("ddlShowMovie", (List<SelectListItem>)(ViewBag.RunningMovies), new { id = "ddlShowMovie", onchange = "fn_OnMovieChange();" })
+                </td>
+            </tr>
+            <tr>
+                <td align="left">Select a ShowDate --</td>
+            </tr>
+            <tr>
+                <td align="left">
+                    @Html.DropDownList("ddlShowDate", new List<SelectListItem>() { new SelectListItem() { Text = "--SELECT--", Value = "0" } }, new { id = "ddlShowDate", onchange = "fn_OnDateChange();" })
+                </td>
+            </tr>
+            <tr>
+                <td align="left">Select a ShowTime --</td>
+            </tr>
+            <tr>
+                <td align="left">
+                    @Html.DropDownList("ddlShowTime", new List<SelectListItem>() { new SelectListItem() { Text = "--SELECT--", Value = "0" } }, new { id = "ddlShowTime"})
+                </td>
+            </tr>
+        </table>
+        <br />
+        <div style="float: right">
+            <input type="image" src="@Url.Content("~/images/appImages/go.png")" id="btnGo" title="GO" alt=""  style=" width:40px; height:40px;" />
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+
+    function fn_ValidateForm() {
+        if ($("#ddlShowMovie").val() == "0") {
+            alert("Please select a movie.");
+            return false;
+        }
+        if ($("#ddlShowDate").val() == "0") {
+            alert("Please select a date.");
+            return false;
+        }
+        if ($("#ddlShowTime").val() == "0") {
+            alert("Please select a time.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function fn_OnMovieChange() {
+        $("#ddlShowDate").empty();
+        $("#ddlShowDate").html("<option value='0'>Loading...</option>");
+        $.ajax({
+            url: "@Url.Action("FillDateList", "Service")",
+            data: "{'pMovieTitle':'" + $("#ddlShowMovie").val() + "'}",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {
+                $("#ddlShowDate").empty();
+                $.each(response, function (i, obj) {
+                    $("#ddlShowDate").append("<option value='" + obj.value + "'>" + obj.text + "</option>");
+                });
+            },
+            error: function () { alert("Error in application."); }
+        });
+    }
+
+    function fn_OnDateChange() {
+        $("#ddlShowTime").empty();
+        $("#ddlShowTime").html("<option value='0'>Loading...</option>");
+        $.ajax({
+            url: "@Url.Action("FillTimeList", "Service")",
+            data: "{'pMovieTitle':'" + $("#ddlShowMovie").val() + "','pMovieDate':'" + $("#ddlShowDate").val() + "'}",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {
+                $("#ddlShowTime").empty();
+                $.each(response, function (i, obj) {
+                    $("#ddlShowTime").append("<option value='" + obj.value + "'>" + obj.text + "</option>");
+                });
+            },
+            error: function () { alert("Error in application."); }
+        });
+    }
+
+</script>
