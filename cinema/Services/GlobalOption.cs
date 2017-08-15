@@ -14,7 +14,7 @@ namespace WebApplication.Services
         public bool SaveFile(IFormFile file, string name)
         {
 
-            using (var fileS = new FileStream(Path.Combine(this.ContentRootPath, @"wwwroot\\images\\movieImages\\" + name), FileMode.Create))
+            using (var fileS = new FileStream(Path.Combine(this.ContentRootPath, "wwwroot/images/movieImages/" + name), FileMode.Create))
             {
                 file.CopyTo(fileS);
             }
